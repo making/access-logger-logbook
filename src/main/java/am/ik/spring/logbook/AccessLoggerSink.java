@@ -48,9 +48,6 @@ public class AccessLoggerSink implements Sink {
 			.append(" url=\"")
 			.append(url)
 			.append("\"") //
-			.append(" protocol=\"")
-			.append(request.getProtocolVersion())
-			.append("\"") //
 			.append(" status=")
 			.append(status) //
 			.append(" duration=")
@@ -59,12 +56,17 @@ public class AccessLoggerSink implements Sink {
 			.addKeyValue("kind", kind)
 			.addKeyValue("method", method)
 			.addKeyValue("url", url)
-			.addKeyValue("protocol", request.getProtocolVersion())
 			.addKeyValue("status", status) //
 			.addKeyValue("duration", duration);
 		if (origin == Origin.REMOTE) {
-			messageBuilder.append(" remote=\"").append(remote).append("\""); //
-			loggingEventBuilder = loggingEventBuilder.addKeyValue("remote", remote);
+			messageBuilder.append(" protocol=\"")
+				.append(request.getProtocolVersion())
+				.append("\"") //
+				.append(" remote=\"")
+				.append(remote)
+				.append("\""); //
+			loggingEventBuilder = loggingEventBuilder.addKeyValue("remote", remote)
+				.addKeyValue("protocol", request.getProtocolVersion());
 		}
 		HttpHeaders headers = request.getHeaders();
 		String userAgent = headers.getFirst("User-Agent");
