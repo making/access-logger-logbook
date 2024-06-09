@@ -55,7 +55,8 @@ public class AccessLoggerSink implements Sink {
 			.append("\""); //
 		loggingEventBuilder = loggingEventBuilder.addKeyValue("kind", kind)
 			.addKeyValue("method", method)
-			.addKeyValue("url", url);
+			.addKeyValue("url", url)
+			.addKeyValue("protocol", request.getProtocolVersion());
 		if (origin == Origin.REMOTE) {
 			messageBuilder.append(" remote=\"").append(remote).append("\""); //
 			loggingEventBuilder = loggingEventBuilder.addKeyValue("remote", remote);
