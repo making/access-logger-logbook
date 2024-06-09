@@ -4,11 +4,11 @@
 		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>am.ik.template</groupId>
-	<artifactId>java-lib</artifactId>
-	<version>0.1.1-SNAPSHOT</version>
-	<name>java-lib</name>
-	<description>A Java library template</description>
+	<groupId>am.ik.spring.logbook</groupId>
+	<artifactId>access-logger-logbook</artifactId>
+	<version>0.1.0-SNAPSHOT</version>
+	<name>access-logger-logbook</name>
+	<description>The Access Logger Logbook implementation</description>
 
 	<properties>
 		<java.version>17</java.version>
@@ -17,6 +17,7 @@
 		<maven.compiler.target>${java.version}</maven.compiler.target>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<spring-boot.version>3.3.0</spring-boot.version>
+		<logbook.version>3.9.0</logbook.version>
 	</properties>
 	<licenses>
 		<license>
@@ -26,12 +27,12 @@
 		</license>
 	</licenses>
 	<scm>
-		<url>https://github.com/making/java-lib</url>
-		<connection>scm:git:git@github.com:making/java-lib.git</connection>
-		<developerConnection>scm:git:git@github.com:making/java-lib.git
+		<url>https://github.com/making/access-logger-logbook</url>
+		<connection>scm:git:git@github.com:making/access-logger-logbook.git</connection>
+		<developerConnection>scm:git:git@github.com:making/access-logger-logbook.git
 		</developerConnection>
 	</scm>
-	<url>https://github.com/making/java-lib</url>
+	<url>https://github.com/making/access-logger-logbook</url>
 
 	<developers>
 		<developer>
@@ -43,22 +44,27 @@
 	</developers>
 	<dependencies>
 		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-api</artifactId>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-autoconfigure</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>org.junit.jupiter</groupId>
-			<artifactId>junit-jupiter-api</artifactId>
+			<groupId>org.zalando</groupId>
+			<artifactId>logbook-spring-boot-starter</artifactId>
+			<exclusions>
+				<exclusion>
+					<groupId>com.jayway.jsonpath</groupId>
+					<artifactId>json-path</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
-			<groupId>org.junit.jupiter</groupId>
-			<artifactId>junit-jupiter-engine</artifactId>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.assertj</groupId>
-			<artifactId>assertj-core</artifactId>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
@@ -93,6 +99,13 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-dependencies</artifactId>
 				<version>${spring-boot.version}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+			<dependency>
+				<groupId>org.zalando</groupId>
+				<artifactId>logbook-bom</artifactId>
+				<version>${logbook.version}</version>
 				<type>pom</type>
 				<scope>import</scope>
 			</dependency>
