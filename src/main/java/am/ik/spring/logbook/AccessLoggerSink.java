@@ -31,7 +31,6 @@ public class AccessLoggerSink implements Sink {
 
 	@Override
 	public void write(Correlation correlation, HttpRequest request, HttpResponse response) throws IOException {
-		StringBuilder messageBuilder = new StringBuilder();
 		Origin origin = request.getOrigin();
 		String kind = switch (origin) {
 			case LOCAL -> "client";
@@ -42,8 +41,7 @@ public class AccessLoggerSink implements Sink {
 		String remote = request.getRemote();
 		int status = response.getStatus();
 		long duration = correlation.getDuration().toMillis();
-		LoggingEventBuilder loggingEventBuilder = log.atInfo();
-		messageBuilder.append("kind=")
+		StringBuilder messageBuilder = new StringBuilder().append("kind=")
 			.append(kind) //
 			.append(" method=")
 			.append(method) //
@@ -52,21 +50,22 @@ public class AccessLoggerSink implements Sink {
 			.append("\"") //
 			.append(" protocol=\"")
 			.append(request.getProtocolVersion())
-			.append("\""); //
-		loggingEventBuilder = loggingEventBuilder.addKeyValue("kind", kind)
+			.append("\"") //
+			.append(" status=")
+			.append(status) //
+			.append(" duration=")
+			.append(duration);
+		LoggingEventBuilder loggingEventBuilder = log.atInfo()
+			.addKeyValue("kind", kind)
 			.addKeyValue("method", method)
 			.addKeyValue("url", url)
-			.addKeyValue("protocol", request.getProtocolVersion());
+			.addKeyValue("protocol", request.getProtocolVersion())
+			.addKeyValue("status", status) //
+			.addKeyValue("duration", duration);
 		if (origin == Origin.REMOTE) {
 			messageBuilder.append(" remote=\"").append(remote).append("\""); //
 			loggingEventBuilder = loggingEventBuilder.addKeyValue("remote", remote);
 		}
-		messageBuilder.append(" status=")
-			.append(status) //
-			.append(" duration=")
-			.append(duration);
-		loggingEventBuilder = loggingEventBuilder.addKeyValue("status", status) //
-			.addKeyValue("duration", duration);
 		HttpHeaders headers = request.getHeaders();
 		String userAgent = headers.getFirst("User-Agent");
 		if (StringUtils.hasLength(userAgent)) {
