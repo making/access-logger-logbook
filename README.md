@@ -5,6 +5,6 @@ The Access Logger implementation with [Logbook](https://github.com/zalando/logbo
 		<dependency>
 			<groupId>am.ik.spring.logbook</groupId>
 			<artifactId>access-logger-logbook</artifactId>
-			<version>0.1.2</version>
+			<version>0.1.3</version>
 		</dependency>
 ```
