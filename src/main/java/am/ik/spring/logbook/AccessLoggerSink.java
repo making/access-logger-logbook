@@ -42,22 +42,24 @@ public class AccessLoggerSink implements Sink {
 		int status = response.getStatus();
 		long duration = correlation.getDuration().toMillis();
 		StringBuilder messageBuilder = new StringBuilder().append("kind=")
-			.append(kind) //
+			.append(kind)
 			.append(" method=")
-			.append(method) //
+			.append(method)
 			.append(" url=\"")
 			.append(url)
-			.append("\"") //
+			.append("\"")
 			.append(" status=")
-			.append(status) //
+			.append(status)
 			.append(" duration=")
 			.append(duration);
 		LoggingEventBuilder loggingEventBuilder = log.atInfo()
 			.addKeyValue("kind", kind)
 			.addKeyValue("method", method)
 			.addKeyValue("url", url)
-			.addKeyValue("status", status) //
-			.addKeyValue("duration", duration);
+			.addKeyValue("status", status)
+			.addKeyValue("duration", duration)
+			.addKeyValue("host", request.getHost())
+			.addKeyValue("path", request.getPath());
 		if (origin == Origin.REMOTE) {
 			messageBuilder.append(" protocol=\"")
 				.append(request.getProtocolVersion())
