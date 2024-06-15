@@ -6,7 +6,7 @@
 
 	<groupId>am.ik.spring.logbook</groupId>
 	<artifactId>access-logger-logbook</artifactId>
-	<version>0.1.3</version>
+	<version>0.1.4-SNAPSHOT</version>
 	<name>access-logger-logbook</name>
 	<description>The Access Logger Logbook implementation</description>
 
