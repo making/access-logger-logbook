@@ -8,11 +8,11 @@ public class ServletAwareAccessLoggerSink extends AccessLoggerSink {
 
 	@Override
 	protected String getUsername(HttpRequest request) {
-		if (request instanceof ForwardingHttpRequest forwardingHttpRequest) {
-			return getUsername(forwardingHttpRequest.delegate());
-		}
-		else if (request instanceof HttpServletRequest httpServletRequest) {
+		if (request instanceof HttpServletRequest httpServletRequest) {
 			return httpServletRequest.getRemoteUser();
+		}
+		else if (request instanceof ForwardingHttpRequest forwardingHttpRequest) {
+			return getUsername(forwardingHttpRequest.delegate());
 		}
 		return null;
 	}
