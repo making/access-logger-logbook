@@ -1,10 +1,10 @@
 package am.ik.spring.logbook;
 
 import java.io.IOException;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.spi.LoggingEventBuilder;
+import org.springframework.util.StringUtils;
 import org.zalando.logbook.Correlation;
 import org.zalando.logbook.HttpHeaders;
 import org.zalando.logbook.HttpRequest;
@@ -12,8 +12,6 @@ import org.zalando.logbook.HttpResponse;
 import org.zalando.logbook.Origin;
 import org.zalando.logbook.Precorrelation;
 import org.zalando.logbook.Sink;
-
-import org.springframework.util.StringUtils;
 
 public class AccessLoggerSink implements Sink {
 
@@ -70,6 +68,11 @@ public class AccessLoggerSink implements Sink {
 			loggingEventBuilder = loggingEventBuilder.addKeyValue("remote", remote)
 				.addKeyValue("protocol", request.getProtocolVersion());
 		}
+		String username = getUsername(request);
+		if (username != null) {
+			messageBuilder.append(" user=\"").append(username).append("\"");
+			loggingEventBuilder = loggingEventBuilder.addKeyValue("user", username);
+		}
 		HttpHeaders headers = request.getHeaders();
 		String userAgent = headers.getFirst("User-Agent");
 		if (StringUtils.hasLength(userAgent)) {
@@ -90,6 +93,10 @@ public class AccessLoggerSink implements Sink {
 			messageBuilder.append(" response_body=\"").append(escape(responseBody)).append("\"");
 		}
 		loggingEventBuilder.log(messageBuilder.toString());
+	}
+
+	protected String getUsername(HttpRequest request) {
+		return null;
 	}
 
 	private static String escape(String input) {
