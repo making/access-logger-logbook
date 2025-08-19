@@ -6,7 +6,7 @@
 
 	<groupId>am.ik.spring.logbook</groupId>
 	<artifactId>access-logger-logbook</artifactId>
-	<version>0.2.1-SNAPSHOT</version>
+	<version>0.3.0-SNAPSHOT</version>
 	<name>access-logger-logbook</name>
 	<description>The Access Logger Logbook implementation</description>
 
@@ -90,6 +90,17 @@
 					</execution>
 				</executions>
 			</plugin>
+			<plugin>
+				<groupId>org.sonatype.central</groupId>
+				<artifactId>central-publishing-maven-plugin</artifactId>
+				<version>0.8.0</version>
+				<extensions>true</extensions>
+				<configuration>
+					<publishingServerId>central</publishingServerId>
+					<autoPublish>true</autoPublish>
+					<waitUntil>published</waitUntil>
+				</configuration>
+			</plugin>
 		</plugins>
 	</build>
 
@@ -111,12 +122,4 @@
 			</dependency>
 		</dependencies>
 	</dependencyManagement>
-
-	<distributionManagement>
-		<repository>
-			<id>sonatype-snapshots</id>
-			<name>sonatype-snapshots</name>
-			<url>https://oss.sonatype.org/content/repositories/snapshots</url>
-		</repository>
-	</distributionManagement>
 </project>
