@@ -10,6 +10,7 @@ import org.springframework.boot.test.system.OutputCaptureExtension;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
 import org.zalando.logbook.Correlation;
+import org.zalando.logbook.ForwardingHttpRequest;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -50,12 +51,35 @@ class ServletAwareAccessLoggerSinkTest {
 	}
 
 	@Test
+	void shouldUsernameContainedIfRemoteUserIsNotNullForForwardingRequest(CapturedOutput capturedOutput)
+			throws Exception {
+		ServletAwareAccessLoggerSink sink = new ServletAwareAccessLoggerSink();
+		MockHttpServletRequest mockRequest = new MockHttpServletRequest();
+		mockRequest.setRemoteUser("test@example.com");
+		RemoteRequest request = new RemoteRequest(mockRequest, FormRequestMode.OFF);
+		LocalResponse response = new LocalResponse(new MockHttpServletResponse(), "2.0");
+		sink.write(correlation, (ForwardingHttpRequest) () -> request, response);
+		assertThat(capturedOutput.toString()).contains("username=\"test@example.com\"");
+	}
+
+	@Test
 	void shouldNotUsernameContainedIfRemoteUserIsNull(CapturedOutput capturedOutput) throws Exception {
 		ServletAwareAccessLoggerSink sink = new ServletAwareAccessLoggerSink();
 		MockHttpServletRequest mockRequest = new MockHttpServletRequest();
 		RemoteRequest request = new RemoteRequest(mockRequest, FormRequestMode.OFF);
 		LocalResponse response = new LocalResponse(new MockHttpServletResponse(), "2.0");
 		sink.write(correlation, request, response);
+		assertThat(capturedOutput.toString()).doesNotContain("username=");
+	}
+
+	@Test
+	void shouldNotUsernameContainedIfRemoteUserIsNullForFowardingRequest(CapturedOutput capturedOutput)
+			throws Exception {
+		ServletAwareAccessLoggerSink sink = new ServletAwareAccessLoggerSink();
+		MockHttpServletRequest mockRequest = new MockHttpServletRequest();
+		RemoteRequest request = new RemoteRequest(mockRequest, FormRequestMode.OFF);
+		LocalResponse response = new LocalResponse(new MockHttpServletResponse(), "2.0");
+		sink.write(correlation, (ForwardingHttpRequest) () -> request, response);
 		assertThat(capturedOutput.toString()).doesNotContain("username=");
 	}
 
