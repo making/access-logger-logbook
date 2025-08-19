@@ -70,8 +70,8 @@ public class AccessLoggerSink implements Sink {
 		}
 		String username = getUsername(request);
 		if (username != null) {
-			messageBuilder.append(" user=\"").append(username).append("\"");
-			loggingEventBuilder = loggingEventBuilder.addKeyValue("user", username);
+			messageBuilder.append(" username=\"").append(username).append("\"");
+			loggingEventBuilder = loggingEventBuilder.addKeyValue("username", username);
 		}
 		HttpHeaders headers = request.getHeaders();
 		String userAgent = headers.getFirst("User-Agent");
