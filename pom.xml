@@ -16,8 +16,8 @@
     <maven.compiler.source>${java.version}</maven.compiler.source>
     <maven.compiler.target>${java.version}</maven.compiler.target>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <spring-boot.version>3.5.4</spring-boot.version>
-    <logbook.version>3.12.2</logbook.version>
+    <spring-boot.version>4.0.2</spring-boot.version>
+    <logbook.version>4.0.2</logbook.version>
   </properties>
   <licenses>
     <license>
@@ -64,7 +64,7 @@
     </dependency>
     <dependency>
       <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-starter-web</artifactId>
+      <artifactId>spring-boot-starter-webmvc</artifactId>
       <scope>test</scope>
     </dependency>
     <dependency>
