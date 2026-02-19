@@ -48,6 +48,10 @@
       <artifactId>spring-boot-autoconfigure</artifactId>
     </dependency>
     <dependency>
+      <groupId>org.jspecify</groupId>
+      <artifactId>jspecify</artifactId>
+    </dependency>
+    <dependency>
       <groupId>jakarta.servlet</groupId>
       <artifactId>jakarta.servlet-api</artifactId>
       <optional>true</optional>
@@ -76,6 +80,23 @@
 
   <build>
     <plugins>
+      <plugin>
+        <groupId>am.ik.maven</groupId>
+        <artifactId>nullability-maven-plugin</artifactId>
+        <version>0.2.0</version>
+        <extensions>true</extensions>
+        <configuration>
+          <checking>tests</checking>
+        </configuration>
+        <executions>
+          <execution>
+            <goals>
+              <goal>configure</goal>
+              <goal>generate-package-info</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-surefire-plugin</artifactId>

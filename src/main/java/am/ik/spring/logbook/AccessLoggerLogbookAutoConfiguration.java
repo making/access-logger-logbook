@@ -1,5 +1,6 @@
 package am.ik.spring.logbook;
 
+import org.jspecify.annotations.Nullable;
 import org.springframework.aot.hint.MemberCategory;
 import org.springframework.aot.hint.RuntimeHints;
 import org.springframework.aot.hint.RuntimeHintsRegistrar;
@@ -44,7 +45,7 @@ public class AccessLoggerLogbookAutoConfiguration {
 	static class AccessLoggerHints implements RuntimeHintsRegistrar {
 
 		@Override
-		public void registerHints(RuntimeHints hints, ClassLoader classLoader) {
+		public void registerHints(RuntimeHints hints, @Nullable ClassLoader classLoader) {
 			if (ClassUtils.isPresent(JAKARTA_SERVLET_HTTP_HTTP_SERVLET_REQUEST, classLoader)) {
 				hints.reflection()
 					.registerType(TypeReference.of(JAKARTA_SERVLET_HTTP_HTTP_SERVLET_REQUEST),

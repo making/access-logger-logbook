@@ -20,7 +20,7 @@ class ServletAwareAccessLoggerSinkTest {
 	Correlation correlation = new Correlation() {
 		@Override
 		public Instant getEnd() {
-			return null;
+			return Instant.now();
 		}
 
 		@Override
@@ -35,7 +35,7 @@ class ServletAwareAccessLoggerSinkTest {
 
 		@Override
 		public Instant getStart() {
-			return null;
+			return Instant.now();
 		}
 	};
 

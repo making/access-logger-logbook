@@ -1,13 +1,14 @@
 package am.ik.spring.logbook;
 
 import jakarta.servlet.http.HttpServletRequest;
+import org.jspecify.annotations.Nullable;
 import org.zalando.logbook.ForwardingHttpRequest;
 import org.zalando.logbook.HttpRequest;
 
 public class ServletAwareAccessLoggerSink extends AccessLoggerSink {
 
 	@Override
-	protected String getUsername(HttpRequest request) {
+	protected @Nullable String getUsername(HttpRequest request) {
 		if (request instanceof HttpServletRequest httpServletRequest) {
 			return httpServletRequest.getRemoteUser();
 		}
