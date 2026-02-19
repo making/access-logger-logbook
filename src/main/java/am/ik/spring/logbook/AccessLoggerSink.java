@@ -1,6 +1,7 @@
 package am.ik.spring.logbook;
 
 import java.io.IOException;
+import org.jspecify.annotations.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.spi.LoggingEventBuilder;
@@ -95,7 +96,7 @@ public class AccessLoggerSink implements Sink {
 		loggingEventBuilder.log(messageBuilder.toString());
 	}
 
-	protected String getUsername(HttpRequest request) {
+	protected @Nullable String getUsername(HttpRequest request) {
 		return null;
 	}
 
